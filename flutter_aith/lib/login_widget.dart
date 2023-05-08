@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_aith/register_page.dart';
 
 class LoginWidget extends StatefulWidget {
   @override
@@ -44,7 +45,32 @@ class _LoginWidgetState extends State<LoginWidget> {
               'Sign In',
               style: TextStyle(fontSize: 24),
             ),
-            onPressed: signIn)
+            onPressed: signIn),
+        const SizedBox(height: 50),
+
+        // not a member? register now
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Not a member?',
+              style: TextStyle(color: Colors.grey[700]),
+            ),
+            const SizedBox(width: 4),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
+              },
+              child: const Text('Register Now!'),
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+            ),
+          ],
+        )
       ]));
 
   Future signIn() async {

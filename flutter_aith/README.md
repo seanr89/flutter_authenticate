@@ -17,5 +17,6 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Cool Links
 
--   login vid: [](https://www.youtube.com/watch?v=4vKiJZNPhss)
--   Firebase url: [](https://firebase.google.com/docs/auth/flutter/start)
+-   login vid: [link](https://www.youtube.com/watch?v=4vKiJZNPhss)
+-   Firebase url: [link](https://firebase.google.com/docs/auth/flutter/start)
+-   another youtube: [link](https://www.youtube.com/watch?v=qlVj-0vpaW0)
