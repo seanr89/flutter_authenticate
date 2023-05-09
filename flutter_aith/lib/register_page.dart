@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_aith/utils.dart';
@@ -11,12 +12,15 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   // text editing controllers
+  final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
   // sign user in method
   void signUserUp() async {
+    if (!formKey.currentState!.validate()) return;
+
     //show loading circle
     showDialog(
       context: context,
@@ -43,24 +47,6 @@ class _RegisterPageState extends State<RegisterPage> {
     //Navigator.pop(context);
   }
 
-  // wrong email message popup
-  // void showErrorMessage(String message) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         backgroundColor: Colors.deepPurple,
-  //         title: Center(
-  //           child: Text(
-  //             message,
-  //             style: const TextStyle(color: Colors.white),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,16 +71,24 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
 
           const SizedBox(height: 25),
-          TextField(
-            controller: emailController,
-            textInputAction: TextInputAction.next,
-            decoration: const InputDecoration(labelText: "Enter Username"),
-          ),
+          TextFormField(
+              controller: emailController,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(labelText: "Enter Username"),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (email) =>
+                  email != null && !EmailValidator.validate(email)
+                      ? 'Enter a valid email '
+                      : null),
           const SizedBox(height: 4),
-          TextField(
+          TextFormField(
             controller: passwordController,
             textInputAction: TextInputAction.done,
             decoration: const InputDecoration(labelText: "Enter Password"),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (value) => value != null && value.length < 6
+                ? 'Enter a valid password '
+                : null,
             obscureText: true,
           ),
           const SizedBox(height: 4),
