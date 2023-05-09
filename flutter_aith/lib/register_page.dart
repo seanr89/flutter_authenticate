@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_aith/utils.dart';
+
+import 'main.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -30,33 +33,33 @@ class _RegisterPageState extends State<RegisterPage> {
             email: emailController.text.trim(),
             password: passwordController.text.trim());
       } else {
-        showErrorMessage("Error here");
+        Utils.showSnackBar("Error here");
       }
-      Navigator.pop(context);
+      //Use global state to pop off the above dialog
     } on FirebaseAuthException catch (e) {
-      //TODO show error message
-      showErrorMessage(e.code);
-      Navigator.pop(context);
+      Utils.showSnackBar(e.code);
     }
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    //Navigator.pop(context);
   }
 
   // wrong email message popup
-  void showErrorMessage(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.deepPurple,
-          title: Center(
-            child: Text(
-              message,
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // void showErrorMessage(String message) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         backgroundColor: Colors.deepPurple,
+  //         title: Center(
+  //           child: Text(
+  //             message,
+  //             style: const TextStyle(color: Colors.white),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +108,9 @@ class _RegisterPageState extends State<RegisterPage> {
           ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(50)),
-              icon: const Icon(Icons.lock_open, size: 32),
+              icon: const Icon(Icons.person, size: 32),
               label: const Text(
-                'Sign In',
+                'Sign Up',
                 style: TextStyle(fontSize: 24),
               ),
               onPressed: signUserUp),

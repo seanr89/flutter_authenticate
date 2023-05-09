@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_aith/register_page.dart';
 
+import 'main.dart';
+
 class LoginWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _LoginWidgetState();
@@ -15,7 +17,6 @@ class _LoginWidgetState extends State<LoginWidget> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-
     super.dispose();
   }
 
@@ -74,8 +75,21 @@ class _LoginWidgetState extends State<LoginWidget> {
       ]));
 
   Future signIn() async {
+    //show loading circle
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim());
+
+    //Use global state to pop off the above dialog
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
