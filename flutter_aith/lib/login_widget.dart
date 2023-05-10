@@ -5,6 +5,8 @@ import 'package:flutter_aith/register_page.dart';
 import 'main.dart';
 
 class LoginWidget extends StatefulWidget {
+  const LoginWidget({super.key});
+
   @override
   State<StatefulWidget> createState() => _LoginWidgetState();
 }
@@ -65,10 +67,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                   MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
               },
-              child: const Text('Register Now!'),
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
+              child: const Text('Register Now!'),
             ),
           ],
         )

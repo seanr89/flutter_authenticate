@@ -21,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void signUserUp() async {
     if (!formKey.currentState!.validate()) return;
 
-    //show loading circle
+    //show loading circle during process
     showDialog(
       context: context,
       builder: (context) {
@@ -43,8 +43,8 @@ class _RegisterPageState extends State<RegisterPage> {
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.code);
     }
+    //handles showdialog to be hidden etc..
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    //Navigator.pop(context);
   }
 
   @override
