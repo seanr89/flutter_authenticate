@@ -18,8 +18,10 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmPasswordController = TextEditingController();
 
   // sign user in method
-  void signUserUp() async {
-    if (!formKey.currentState!.validate()) return;
+  Future signUserUp() async {
+    // if (formKey.currentState!.validate() == false) return;
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
 
     //show loading circle during process
     showDialog(
@@ -51,64 +53,70 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          // logo
-          const Icon(
-            Icons.lock,
-            size: 100,
-          ),
-
-          const SizedBox(height: 40),
-          // welcome back, you've been missed!
-          Text(
-            'Please Enter Registration Details Here!',
-            style: TextStyle(
-              color: Colors.grey[700],
-              fontSize: 16,
+          child: Form(
+        key: formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            // logo
+            const Icon(
+              Icons.lock,
+              size: 100,
             ),
-          ),
 
-          const SizedBox(height: 25),
-          TextFormField(
-              controller: emailController,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(labelText: "Enter Username"),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (email) =>
-                  email != null && !EmailValidator.validate(email)
-                      ? 'Enter a valid email '
-                      : null),
-          const SizedBox(height: 4),
-          TextFormField(
-            controller: passwordController,
-            textInputAction: TextInputAction.done,
-            decoration: const InputDecoration(labelText: "Enter Password"),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) => value != null && value.length < 6
-                ? 'Enter a valid password '
-                : null,
-            obscureText: true,
-          ),
-          const SizedBox(height: 4),
-          TextField(
-            controller: confirmPasswordController,
-            textInputAction: TextInputAction.done,
-            decoration: const InputDecoration(labelText: "Confirm Password"),
-            obscureText: true,
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(50)),
-              icon: const Icon(Icons.person, size: 32),
-              label: const Text(
-                'Sign Up',
-                style: TextStyle(fontSize: 24),
+            const SizedBox(height: 40),
+            // welcome back, you've been missed!
+            Text(
+              'Please Enter Registration Details Here!',
+              style: TextStyle(
+                color: Colors.grey[700],
+                fontSize: 16,
               ),
-              onPressed: signUserUp),
-        ]),
+            ),
+
+            const SizedBox(height: 25),
+            TextFormField(
+                controller: emailController,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(labelText: "Enter Username"),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (email) =>
+                    email != null && !EmailValidator.validate(email)
+                        ? 'Enter a valid email '
+                        : null),
+            const SizedBox(height: 4),
+            TextFormField(
+              controller: passwordController,
+              textInputAction: TextInputAction.done,
+              decoration: const InputDecoration(labelText: "Enter Password"),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (value) => value != null && value.length < 6
+                  ? 'Enter a valid password '
+                  : null,
+              obscureText: true,
+            ),
+            const SizedBox(height: 4),
+            TextFormField(
+              controller: confirmPasswordController,
+              textInputAction: TextInputAction.done,
+              decoration: const InputDecoration(labelText: "Confirm Password"),
+              validator: (value) => value != null && value.length < 6
+                  ? 'Enter a valid password '
+                  : null,
+              obscureText: true,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(50)),
+                icon: const Icon(Icons.person, size: 32),
+                label: const Text(
+                  'Sign Up',
+                  style: TextStyle(fontSize: 24),
+                ),
+                onPressed: signUserUp),
+          ]),
+        ),
       )),
     );
   }
