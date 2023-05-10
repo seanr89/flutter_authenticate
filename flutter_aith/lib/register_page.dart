@@ -96,13 +96,10 @@ class _RegisterPageState extends State<RegisterPage> {
               obscureText: true,
             ),
             const SizedBox(height: 4),
-            TextFormField(
+            TextField(
               controller: confirmPasswordController,
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(labelText: "Confirm Password"),
-              validator: (value) => value != null && value.length < 6
-                  ? 'Enter a valid password '
-                  : null,
               obscureText: true,
             ),
             const SizedBox(height: 20),
